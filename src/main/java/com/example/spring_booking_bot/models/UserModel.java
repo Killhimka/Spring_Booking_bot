@@ -1,0 +1,25 @@
+package com.example.spring_booking_bot.models;
+
+import com.example.spring_booking_bot.helpers.DoctorEnum;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.text.DateFormat;
+
+@Entity
+@Table(name = "telegram_user")
+@Data
+public class UserModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
+    @Column(name = "username")
+    String username;
+    @Column(name = "telegram_id")
+    String tgid;
+    @Column(name = "name")
+    String name;
+    @Column(name = "wanted_doc")
+    @Enumerated
+    DoctorEnum doctorEnum;
+}
