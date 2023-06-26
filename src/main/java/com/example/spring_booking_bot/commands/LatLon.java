@@ -35,7 +35,7 @@ public class LatLon {
             Elements elements = table.select("span.coordinates");
             elements1 = elements.select("a.mw-kartographer-maplink");
         } catch (Exception e){
-            System.out.println("Я незнаю такого города");
+            System.err.println("Города с названием "+city+" не существует");
         }
         /*System.out.println(elements1);*/
 
@@ -66,13 +66,18 @@ public class LatLon {
         return latLon;
     }
     public List latLonList (){
-        List<String> latLonList = new ArrayList<>();
-        Pattern p = Pattern.compile("\\d{1,3}\\.\\d{1,12}|\\-\\d{1,3}\\.\\d{1,12}|" +
-                "\\d{1,3}|\\-\\d{1,3}");
-        System.out.println(city);
-        Matcher m = p.matcher(latLonString(city));
-        while (m.find()){
-            latLonList.add(m.group());
+        List<String> latLonList;
+        try {
+            latLonList = new ArrayList<>();
+            Pattern p = Pattern.compile("\\d{1,3}\\.\\d{1,12}|\\-\\d{1,3}\\.\\d{1,12}|" +
+                    "\\d{1,3}|\\-\\d{1,3}");
+            /*System.out.println(city);*/
+            Matcher m = p.matcher(latLonString(city));
+            while (m.find()) {
+                latLonList.add(m.group());
+            }
+        } catch (NullPointerException e) {
+            throw new RuntimeException();
         }
         return latLonList;
     }

@@ -53,11 +53,18 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         String messageText = update.getMessage().getText();
         long chatId = update.getMessage().getChatId();
-        if (update.hasMessage() && update.getMessage().hasText()) {
-
+        /*if (update.hasMessage() && update.getMessage().hasText()) {
+        }*/
+        if (update.getMessage().getText().equals("/start")){
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(update.getMessage().getChatId().toString());
+            sendMessage(chatId,"Привет! Я тестовый телеграм бот, могу записать тебя к врачу!");
+            sendMessage(chatId,"Для этого пропиши (Записаться) с большой буквы!");
+            sendMessage(chatId,"Так же я могу сказать тебе какая сейчас погода, в любом городе)");
+            sendMessage(chatId,"Для этого просто пропиши интересующий тебя город с большой буквы! И давай без ошибок!)");
         }
-
-        if (!update.getMessage().getText().equals("Записаться")){
+        if (!update.getMessage().getText().equals("Записаться")&&
+                !update.getMessage().getText().equals("/start")){
             Openweathermap oW = new Openweathermap(messageText);
             oW.Weather();
             sendMessage(chatId,oW.getAnswer());
